@@ -4,5 +4,8 @@
     "editor.formatOnPaste": true,
     "editor.defaultFormatter": "Dart-Code.flutter",
     "dart.previewFlutterUiGuidesCustomTracking": true,
-    "dart.previewFlutterUiGuides": true
+    "dart.previewFlutterUiGuides": true,
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    }
 }

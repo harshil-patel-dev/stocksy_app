@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "stock_trading_app",
+            "name": "stocksy",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "stock_trading_app (profile mode)",
+            "name": "stocksy (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "stock_trading_app (release mode)",
+            "name": "stocksy (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
