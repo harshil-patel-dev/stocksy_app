@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -52,20 +54,23 @@ class _MyAppState extends State<MyApp> {
             routerConfig: _router,
             debugShowCheckedModeBanner: false,
             title: 'AppConfig.appName',
-            builder: (context, child) => BlocListener<NetworkConnectionChecker,
-                InternetConnectionStatus>(
-              listenWhen: (previous, current) => previous != current,
-              listener: (context, state) {
-                if (state == InternetConnectionStatus.connected) {
-                  ToastManager.showSuccessToast(context, title: 'Back Online');
-                } else {
-                  ToastManager.showErrorToast(context,
-                      title: 'No Internet Connection');
-                }
-              },
-              child: child,
-            ),
-          ),
+            builder: (context, child) => kIsWeb
+                ? child!
+                : BlocListener<NetworkConnectionChecker,
+                    InternetConnectionStatus>(
+                    listenWhen: (previous, current) => previous != current,
+                    listener: (context, state) {
+                      if (state == InternetConnectionStatus.connected) {
+                        ToastManager.showSuccessToast(context,
+                            title: 'Back Online');
+                      } else {
+                        ToastManager.showErrorToast(context,
+                            title: 'No Internet Connection');
+                      }
+                    },
+                    child: child,
+                  ),
+          ).animate().fadeIn(duration: 400.ms),
         ),
       ),
     );

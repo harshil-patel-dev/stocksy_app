@@ -1,91 +1,139 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: #ffffff;
+    }
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+    img {
+      height: 25%;
+      margin-bottom: 20px;
+      position: absolute;
+    }
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+    .main-content {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.4s ease-in-out;
+    }
 
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
+
+    .loader {
+      width: 80%;
+      max-width: 300px;
+      height: 4px;
+      background-color: #ccc;
+      overflow: hidden;
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .loader::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 100%;
+      background-color: #2989f0;
+      animation: loading 3s infinite;
+    }
+
+    @keyframes loading {
+      0% {
+        width: 0;
+      }
+
+      50% {
+        width: 100%;
+      }
+
+      100% {
+        width: 0;
+      }
+    }
+  </style>
   <base href="$FLUTTER_BASE_HREF">
-
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="stock_trading_app">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>stock_trading_app</title>
+  <title>App</title>
   <link rel="manifest" href="manifest.json">
 
   <script>
-    // The value below is injected by flutter build, do not touch.
     const serviceWorkerVersion = "{{flutter_service_worker_version}}";
   </script>
-  <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
   <script>
-  
- function openWindow(url, callback) {
-  const win = window.open(url, '_blank'); // Open in new tab
 
-  // Error handling for blocked popups
-  if (!win) {
-    console.error('Popup blocked by browser settings. Please allow popups for this site.');
-    return;
-  }
+    function openWindow(url, callback) {
+      const win = window.open(url, '_blank'); // Open in new tab
 
-  // Capture URL changes using postMessage
-  win.addEventListener('message', function(event) {
-    // if (event.origin !== window.location.origin) {
-    //   return; // Ignore messages from other origins
-    // }
-    if (event.data && event.data.type === 'urlChange') {
-       console.log('html: '+event.data.url);
-      callback(event.data.url); // Send URL change to Dart code
+      if (!win) {
+        console.error('Popup blocked by browser settings. Please allow popups for this site.');
+        return;
+      }
+
+      // Capture URL changes using postMessage
+      win.addEventListener('message', function (event) {
+        if (event.data && event.data.type === 'urlChange') {
+          console.log('html: ' + event.data.url);
+          callback(event.data.url); // Send URL change to Dart code
+        }
+      });
+
+      win.addEventListener('beforeunload', function () {
+        callback('windowClosed'); // Send 'windowClosed' message to Dart on close
+      });
     }
-  });
 
-  // Handle window closed scenario
-  win.addEventListener('beforeunload', function() {
-
-    callback('windowClosed'); // Send 'windowClosed' message to Dart on close
-  });
-}
-
-</script>
+  </script>
 </head>
+
 <body>
   <script>
-    window.addEventListener('load', function(ev) {
+    function delay(time) {
+      return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    window.addEventListener('load', function (ev) {
+      var loaderContent = document.querySelector('#loader-content');
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
-        onEntrypointLoaded: function(engineInitializer) {
+        onEntrypointLoaded: function (engineInitializer) {
           let config = {
-            renderer:"html",
+            renderer: "html",
           }
-          engineInitializer.initializeEngine(config).then(function(appRunner) {
-            appRunner.runApp();
+          engineInitializer.initializeEngine(config).then(async function (appRunner) {
+            loaderContent.style.opacity = "0";
+            await delay(1000);
+            await appRunner.runApp();
           });
         }
       });
     });
+
   </script>
+
+  <div class="main-content" id="loader-content">
+    <img src="assets/icon.png">
+    <div class="loader"></div>
+  </div>
+
+
+  <script src="main.dart.js" type="application/javascript"></script>
+
 </body>
+
 </html>

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:stock_trading_app/core/constants/app_export.dart';
 import 'package:stock_trading_app/features/Dashboard/view/dashboard_view.dart';
 import 'package:stock_trading_app/features/Dashboard/view/detail.dart';
@@ -22,13 +23,13 @@ class AppRouter {
 
   late final router = GoRouter(
       navigatorKey: _rootNavigatorKey,
-      initialLocation: Routes.splash.path,
+      initialLocation: kIsWeb ? Routes.home.path : Routes.splash.path,
       debugLogDiagnostics: true,
       refreshListenable: authenticationBloc,
       redirect: (BuildContext context, GoRouterState state) {
         if (authenticationBloc.state == const AuthenticationState.unknown()) {
           if (state.path == Routes.splash.path) return null;
-          return Routes.splash.path;
+          return kIsWeb ? Routes.home.path : Routes.splash.path;
         } else if (authenticationBloc.state ==
             const AuthenticationState.unauthenticated()) {
           if (state.matchedLocation == Routes.login.path) return null;
