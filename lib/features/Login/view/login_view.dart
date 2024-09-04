@@ -1,13 +1,15 @@
-import 'package:stock_trading_app/core/constants/app_imports.dart';
+import 'package:stock_trading_app/core/constants/app_export.dart';
 import 'package:stock_trading_app/features/authentication/bloc/auth_bloc.dart';
 import 'package:stock_trading_app/features/authentication/repository/auth_repository.dart';
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Center(
         child: Column(

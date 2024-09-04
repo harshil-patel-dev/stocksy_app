@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:stock_trading_app/core/config/service_locator.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+
+import 'package:stock_trading_app/core/config/dependency_injector.dart';
+import 'package:stock_trading_app/core/constants/app_export.dart';
+import 'package:stock_trading_app/core/network/network_connection_checker.dart';
 import 'package:stock_trading_app/core/router/app_router.dart';
 import 'package:toastification/toastification.dart';
-
 import 'core/utils/toast_manager.dart';
 import 'features/User/bloc/user_bloc.dart';
 import 'features/authentication/bloc/auth_bloc.dart';
@@ -17,12 +20,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late final GoRouter _router =
+  final GoRouter _router =
       AppRouter(authenticationBloc: getIt.get<AuthenticationBloc>()).router;
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
+    return ToastificationWrapper(
+      config: ToastManager.config,
+      child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider.value(
             value: getIt.get<AuthenticationBloc>().authenticationRepository,
@@ -39,25 +44,30 @@ class _MyAppState extends State<MyApp> {
             BlocProvider.value(
               value: getIt.get<UserBloc>()..add(SetInitialUserDetails()),
             ),
+            BlocProvider.value(
+              value: NetworkConnectionChecker(),
+            ),
           ],
-          child: ToastificationWrapper(
-            config: ToastManager.config,
-            child: MaterialApp.router(
-              routerConfig: _router,
-              debugShowCheckedModeBanner: false,
-              title: 'AppConfig.appName',
+          child: MaterialApp.router(
+            routerConfig: _router,
+            debugShowCheckedModeBanner: false,
+            title: 'AppConfig.appName',
+            builder: (context, child) => BlocListener<NetworkConnectionChecker,
+                InternetConnectionStatus>(
+              listenWhen: (previous, current) => previous != current,
+              listener: (context, state) {
+                if (state == InternetConnectionStatus.connected) {
+                  ToastManager.showSuccessToast(context, title: 'Back Online');
+                } else {
+                  ToastManager.showErrorToast(context,
+                      title: 'No Internet Connection');
+                }
+              },
+              child: child,
             ),
           ),
-        ));
-  }
-}
-
-
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
+        ),
+      ),
+    );
   }
 }

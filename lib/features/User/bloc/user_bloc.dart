@@ -10,7 +10,7 @@ part 'user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserRepository userRepository;
   UserBloc({required this.userRepository})
-      : super(UserState(userDetails: UserModel())) {
+      : super(UserState(userDetails: const UserModel())) {
     on<SetInitialUserDetails>(((event, emit) async {
       String? token = await userRepository.getAccessToken();
       if (token == null) {

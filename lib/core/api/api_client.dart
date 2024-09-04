@@ -21,8 +21,8 @@ class DioClient {
   }) {
     _dio
       ..options.baseUrl = baseUrl
-      ..options.connectTimeout = Duration(seconds: 5)
-      ..options.receiveTimeout = Duration(seconds: 3)
+      ..options.connectTimeout = const Duration(seconds: 5)
+      ..options.receiveTimeout = const Duration(seconds: 3)
       ..httpClientAdapter
       ..options.headers = {'Content-Type': 'application/json; charset=UTF-8'};
     _dio.interceptors.addAll(

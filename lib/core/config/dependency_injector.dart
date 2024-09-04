@@ -7,7 +7,7 @@ import 'app_info.dart';
 
 final getIt = GetIt.instance;
 
-void setUpServices() {
+void initializeDependencies() {
   getIt.registerSingleton<AuthenticationRepository>(AuthenticationRepository());
   getIt.registerSingleton<UserRepository>(UserRepository());
   getIt.registerSingleton<AuthenticationBloc>(AuthenticationBloc(
@@ -15,4 +15,5 @@ void setUpServices() {
   getIt.registerSingleton<UserBloc>(
       UserBloc(userRepository: getIt.get<UserRepository>()));
   getIt.registerSingletonAsync<AppInfo>(() => AppInfo.setAppInfo());
+  
 }

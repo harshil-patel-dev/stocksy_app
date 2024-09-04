@@ -1,4 +1,6 @@
-import 'package:stock_trading_app/core/constants/app_imports.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:stock_trading_app/core/constants/app_export.dart';
+import 'package:stock_trading_app/core/network/network_connection_checker.dart';
 
 class DashboardScreen extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -11,8 +13,9 @@ class DashboardScreen extends StatelessWidget {
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         destinations: const [
-          NavigationDestination(label: 'Section A', icon: Icon(Icons.home)),
-          NavigationDestination(label: 'Section B', icon: Icon(Icons.settings)),
+          NavigationDestination(label: 'Home', icon: Icon(Icons.home)),
+          NavigationDestination(
+              label: 'Profile', icon: Icon(Icons.person_2_rounded)),
         ],
         onDestinationSelected: (index) {
           navigationShell.goBranch(

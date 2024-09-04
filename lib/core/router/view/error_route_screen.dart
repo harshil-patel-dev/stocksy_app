@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ErrorScreen extends StatelessWidget {
-  const ErrorScreen({Key? key, this.e}) : super(key: key);
+  const ErrorScreen({super.key, this.e});
   final Exception? e;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text("Page not found !!"),
+        title: const Text("Page not found !!"),
       ),
       body: Center(
         child: Column(

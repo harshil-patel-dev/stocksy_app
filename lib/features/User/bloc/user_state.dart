@@ -3,7 +3,7 @@ part of 'user_bloc.dart';
 class UserState extends Equatable {
   final UserModel userDetails;
 
-  UserState({required this.userDetails});
+  const UserState({required this.userDetails});
 
   @override
   List<Object> get props => [];
