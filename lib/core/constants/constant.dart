@@ -1,4 +1,5 @@
 class AppConstants {
+  static const AppLogoHeroTag = 'main_logo';
   static const termsAndConditionsUrl =
       'https://billmart.com/terms-conditions.html';
   static const privacyPolicy = 'https://www.billmart.com/privacy-policy.html';

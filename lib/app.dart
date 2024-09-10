@@ -1,16 +1,11 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-
 import 'package:stock_trading_app/core/config/dependency_injector.dart';
 import 'package:stock_trading_app/core/constants/app_export.dart';
 import 'package:stock_trading_app/core/network/network_connection_checker.dart';
 import 'package:stock_trading_app/core/router/app_router.dart';
 import 'package:toastification/toastification.dart';
-import 'core/utils/toast_manager.dart';
 import 'features/User/bloc/user_bloc.dart';
 import 'features/authentication/bloc/auth_bloc.dart';
 

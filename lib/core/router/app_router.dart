@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:stock_trading_app/core/constants/app_export.dart';
 import 'package:stock_trading_app/features/Dashboard/view/dashboard_view.dart';
 import 'package:stock_trading_app/features/Dashboard/view/detail.dart';
@@ -23,22 +22,27 @@ class AppRouter {
 
   late final router = GoRouter(
       navigatorKey: _rootNavigatorKey,
-      initialLocation: kIsWeb ? Routes.home.path : Routes.splash.path,
+      initialLocation: Routes.splash.path,
       debugLogDiagnostics: true,
       refreshListenable: authenticationBloc,
       redirect: (BuildContext context, GoRouterState state) {
+        final currentRoute = Routes.values.firstWhere(
+          (route) => route.path == state.matchedLocation,
+          orElse: () => Routes.splash,
+        );
+
         if (authenticationBloc.state == const AuthenticationState.unknown()) {
-          if (state.path == Routes.splash.path) return null;
-          return kIsWeb ? Routes.home.path : Routes.splash.path;
+          if (currentRoute == Routes.splash) return null;
+          return Routes.splash.path;
         } else if (authenticationBloc.state ==
             const AuthenticationState.unauthenticated()) {
-          if (state.matchedLocation == Routes.login.path) return null;
-          if (state.matchedLocation == Routes.signUp.path) return null;
+          if (currentRoute == Routes.login) return null;
+          if (currentRoute == Routes.signUp) return null;
           return Routes.login.path;
         } else {
-          if (state.matchedLocation == Routes.login.path ||
-              state.matchedLocation == Routes.signUp.path ||
-              state.matchedLocation == Routes.home.path) {
+          if (currentRoute == Routes.login ||
+              currentRoute == Routes.signUp ||
+              currentRoute == Routes.home) {
             return Routes.home.path;
           }
           return null;
@@ -70,9 +74,12 @@ class AppRouter {
         ),
         StatefulShellRoute.indexedStack(
             parentNavigatorKey: _rootNavigatorKey,
-            builder: (context, state, navigationShell) {
-              return DashboardScreen(navigationShell: navigationShell);
-            },
+            pageBuilder: (context, state, navigationShell) =>
+                CustomTransitionPage(
+                    child: DashboardScreen(navigationShell: navigationShell),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) =>
+                            FadeTransition(opacity: animation, child: child)),
             branches: [
               StatefulShellBranch(
                 navigatorKey: _homeNavigatorKey,
@@ -108,7 +115,7 @@ class AppRouter {
                     name: Routes.profile.name,
                     path: Routes.profile.path,
                     pageBuilder: (context, state) {
-                      return NoTransitionPage(
+                      return const NoTransitionPage(
                         child: UserProfileView(),
                       );
                     },
