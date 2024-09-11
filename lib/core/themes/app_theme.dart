@@ -40,9 +40,11 @@
 //   }
 // }
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'dart:html' as html;
 import 'package:stock_trading_app/core/themes/app_colors.dart';
 import 'package:stock_trading_app/core/themes/app_fonts.dart';
 
@@ -94,7 +96,12 @@ class AppTheme {
 class ThemeCubit extends HydratedCubit<ThemeMode> {
   ThemeCubit() : super(ThemeMode.system);
 
-  void updateTheme(ThemeMode theme) => emit(theme);
+  void updateTheme(ThemeMode theme) {
+    emit(theme);
+    if (kIsWeb) {
+      html.window.localStorage['theme'] = theme.toString();
+    }
+  }
 
   @override
   ThemeMode? fromJson(Map<String, dynamic> json) {

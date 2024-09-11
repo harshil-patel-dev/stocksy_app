@@ -94,6 +94,21 @@
       win.addEventListener('beforeunload', function () {
         callback('windowClosed'); // Send 'windowClosed' message to Dart on close
       });
+      window.addEventListener('storage', function (event) {
+        if (event.key === 'theme') {
+          applyTheme();
+        }
+      });
+    }
+
+    function applyTheme() {
+      var theme = localStorage.getItem('theme');
+      console.log(theme);
+      if (theme === 'ThemeMode.dark') {
+        document.body.style.backgroundColor = '#121212'; // Dark theme color
+      } else {
+        document.body.style.backgroundColor = '#ffffff'; // Light theme color
+      }
     }
 
   </script>
@@ -106,6 +121,7 @@
     }
 
     window.addEventListener('load', function (ev) {
+      applyTheme();
       var loaderContent = document.querySelector('#loader-content');
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
