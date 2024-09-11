@@ -12,7 +12,7 @@ class ApiInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (response.statusCode == 401) {
-      getIt.get<AuthenticationBloc>().add(AuthenticationLogoutRequested());
+      getIt.get<AuthenticationBloc>().add(AuthLogoutRequested());
     }
     super.onResponse(response, handler);
   }

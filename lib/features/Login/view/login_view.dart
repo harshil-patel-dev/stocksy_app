@@ -1,4 +1,6 @@
+import 'package:stock_trading_app/core/config/dependency_injector.dart';
 import 'package:stock_trading_app/core/constants/app_export.dart';
+import 'package:stock_trading_app/features/User/repository/user_repository.dart';
 import 'package:stock_trading_app/features/authentication/bloc/auth_bloc.dart';
 import 'package:stock_trading_app/features/authentication/repository/auth_repository.dart';
 
@@ -26,11 +28,14 @@ class LoginScreen extends StatelessWidget {
                     backgroundColor:
                         WidgetStatePropertyAll(Colors.greenAccent)),
                 onPressed: () {
-                  ToastManager.showSuccessToast(context,
-                      title: 'Login Successfull');
                   context.read<AuthenticationBloc>().add(
                       const AuthenticationStatusChanged(
                           AuthenticationStatus.authenticated));
+                  getIt
+                      .get<UserRepository>()
+                      .setAccessToken("loggedinasUserOffline");
+                  ToastManager.showSuccessToast(context,
+                      title: 'Login Successfull');
                 },
                 child: const Text('Login')),
           ],

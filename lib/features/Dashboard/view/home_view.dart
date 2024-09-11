@@ -1,5 +1,4 @@
 import 'package:stock_trading_app/core/constants/app_export.dart';
-import 'package:stock_trading_app/widgets/navbar.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -7,7 +6,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,

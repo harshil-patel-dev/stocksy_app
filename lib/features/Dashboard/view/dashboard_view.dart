@@ -35,7 +35,6 @@ class DashboardScreen extends StatelessWidget {
 
   Scaffold _webDashboardView(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: _webNavbarView(context),
       body: Expanded(
         child: navigationShell,

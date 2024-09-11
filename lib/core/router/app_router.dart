@@ -1,8 +1,10 @@
+import 'package:stock_trading_app/core/config/dependency_injector.dart';
 import 'package:stock_trading_app/core/constants/app_export.dart';
 import 'package:stock_trading_app/features/Dashboard/view/dashboard_view.dart';
 import 'package:stock_trading_app/features/Dashboard/view/detail.dart';
 import 'package:stock_trading_app/features/Dashboard/view/home_view.dart';
 import 'package:stock_trading_app/features/User/view/user_profile_view.dart';
+import 'package:stock_trading_app/features/authentication/repository/auth_repository.dart';
 import 'package:stock_trading_app/features/splash/splash_screen.dart';
 import '../../features/Login/view/login_view.dart';
 import '../../features/SignUp/view/signup_view.dart';
@@ -26,27 +28,37 @@ class AppRouter {
       debugLogDiagnostics: true,
       refreshListenable: authenticationBloc,
       redirect: (BuildContext context, GoRouterState state) {
-        final currentRoute = Routes.values.firstWhere(
-          (route) => route.path == state.matchedLocation,
-          orElse: () => Routes.splash,
-        );
-
-        if (authenticationBloc.state == const AuthenticationState.unknown()) {
-          if (currentRoute == Routes.splash) return null;
-          return Routes.splash.path;
-        } else if (authenticationBloc.state ==
-            const AuthenticationState.unauthenticated()) {
-          if (currentRoute == Routes.login) return null;
-          if (currentRoute == Routes.signUp) return null;
-          return Routes.login.path;
-        } else {
-          if (currentRoute == Routes.login ||
-              currentRoute == Routes.signUp ||
-              currentRoute == Routes.home) {
+        if (state.matchedLocation == Routes.splash.path) {
+          // If auth state is known, redirect to appropriate screen
+          if (authenticationBloc.state ==
+              const AuthenticationState.authenticated()) {
             return Routes.home.path;
+          } else if (authenticationBloc.state ==
+              const AuthenticationState.unauthenticated()) {
+            return Routes.login.path;
           }
+          // If auth state is unknown, stay on splash screen
           return null;
         }
+
+        // Handle other routes based on auth state
+        if (authenticationBloc.state ==
+            const AuthenticationState.unauthenticated()) {
+          if (state.matchedLocation == Routes.login.path ||
+              state.matchedLocation == Routes.signUp.path) {
+            return null;
+          }
+          return Routes.login.path;
+        } else if (authenticationBloc.state ==
+            const AuthenticationState.authenticated()) {
+          if (state.matchedLocation == Routes.login.path ||
+              state.matchedLocation == Routes.signUp.path) {
+            return Routes.home.path;
+          }
+        }
+
+        // If no redirect is necessary, return null
+        return null;
       },
       errorPageBuilder: (context, state) {
         return MaterialPage(

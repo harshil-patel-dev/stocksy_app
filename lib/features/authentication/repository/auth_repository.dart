@@ -1,11 +1,11 @@
 import 'dart:async';
+import 'package:stock_trading_app/core/config/dependency_injector.dart';
+import 'package:stock_trading_app/core/utils/app_storage.dart';
+import 'package:stock_trading_app/features/User/bloc/user_bloc.dart';
+
 import '../../User/repository/user_repository.dart';
 
-enum AuthenticationStatus {
-  unknown,
-  authenticated,
-  unauthenticated
-}
+enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 
 class AuthenticationRepository {
   final controller = StreamController<AuthenticationStatus>();
@@ -18,8 +18,7 @@ class AuthenticationRepository {
   }
 
   Future<void> authenticateUser() async {
-    UserRepository userRepository = UserRepository();
-    String? token = await userRepository.getAccessToken();
+    String? token = await AppStorage.getAuthToken();
     await getIntroScreenShown();
 
     if (token != null) {
@@ -44,30 +43,13 @@ class AuthenticationRepository {
   }
 
   Future<void> logOut() async {
-    UserRepository userRepository = UserRepository();
-    await userRepository.removeUserDetails();
-
-    // getIt.get<UserBloc>().add(SetInitialUserDetails());
+    await getIt.get<UserRepository>().removeUserDetails();
+    await AppStorage.removeAuthToken();
+    await AppStorage.clearUserData();
+    getIt.get<UserBloc>().add(SetInitialUserDetails());
 
     controller.add(AuthenticationStatus.unauthenticated);
   }
-
-  // Future<ApiResult> resetPasssword({required String password}) async {
-  //   ApiResult apiResult =
-  //       await _authenticationService.resetPassword(password: password);
-  //   return apiResult;
-  // }
-
-  // Future<ApiResult> changePasssword(
-  //     {required String oldPassword,
-  //     required String newPassword,
-  //     }) async {
-  //   ApiResult apiResult = await _authenticationService.changePassword(
-  //       oldPassword: oldPassword,
-  //       newPassword: newPassword,
-  //   );
-  //   return apiResult;
-  // }
 
   void dispose() => controller.close();
 }

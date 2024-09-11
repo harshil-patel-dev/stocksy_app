@@ -1,3 +1,6 @@
+import 'package:hive/hive.dart';
+import 'package:stock_trading_app/core/utils/app_storage.dart';
+
 import '../model/user_model.dart';
 
 class UserRepository {
@@ -32,42 +35,14 @@ class UserRepository {
   // access token
 
   Future<String?> getAccessToken() async {
-    // Box keyBox = await Hive.openBox(AppStorage.encryptedBox);
-    // var key = await keyBox.get(AppStorage.key);
-
-    // if (key != null) {
-    //   var encryptedBox = await Hive.openBox(AppStorage.secureVault,
-    //       encryptionCipher: HiveAesCipher(key));
-    //   return await encryptedBox.get(AppStorage.accessToken);
-    // } else {
-    return null;
-    // }
+    return await AppStorage.getAuthToken();
   }
 
-  Future<bool?> removeAccessToken() async {
-    // Box keyBox = await Hive.openBox(AppStorage.encryptedBox);
-    // var key = await keyBox.get(AppStorage.key);
-    // if (key != null) {
-    //   var encryptedBox = await Hive.openBox(AppStorage.secureVault,
-    //       encryptionCipher: HiveAesCipher(key));
-    //   await encryptedBox.delete(AppStorage.accessToken);
-    //   return true;
-    // } else {
-    return false;
-    // }
+  Future removeAccessToken() async {
+    return await AppStorage.removeAuthToken();
   }
 
   Future<void> setAccessToken(String? token) async {
-    // var keyBox = await Hive.openBox(AppStorage.encryptedBox);
-    // List<int> key;
-    // if (!keyBox.containsKey('key')) {
-    //   key = Hive.generateSecureKey();
-    //   await keyBox.put(AppStorage.key, key);
-    // } else {
-    //   key = await keyBox.get(AppStorage.key);
-    // }
-    // var encryptedBox = await Hive.openBox(AppStorage.secureVault,
-    //     encryptionCipher: HiveAesCipher(key));
-    // await encryptedBox.put(AppStorage.accessToken, token);
+    return await AppStorage.saveAuthToken(token);
   }
 }

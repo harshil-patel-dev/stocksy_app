@@ -5,6 +5,7 @@ import 'package:stock_trading_app/core/config/dependency_injector.dart';
 import 'package:stock_trading_app/core/constants/app_export.dart';
 import 'package:stock_trading_app/core/network/network_connection_checker.dart';
 import 'package:stock_trading_app/core/router/app_router.dart';
+import 'package:stock_trading_app/core/themes/app_theme.dart';
 import 'package:toastification/toastification.dart';
 import 'features/User/bloc/user_bloc.dart';
 import 'features/authentication/bloc/auth_bloc.dart';
@@ -44,27 +45,37 @@ class _MyAppState extends State<MyApp> {
             BlocProvider.value(
               value: NetworkConnectionChecker(),
             ),
+            BlocProvider.value(
+              value: ThemeCubit(),
+            ),
           ],
-          child: MaterialApp.router(
-            routerConfig: _router,
-            debugShowCheckedModeBanner: false,
-            title: 'AppConfig.appName',
-            builder: (context, child) => kIsWeb
-                ? child!
-                : BlocListener<NetworkConnectionChecker,
-                    InternetConnectionStatus>(
-                    listenWhen: (previous, current) => previous != current,
-                    listener: (context, state) {
-                      if (state == InternetConnectionStatus.connected) {
-                        ToastManager.showSuccessToast(context,
-                            title: 'Back Online');
-                      } else {
-                        ToastManager.showErrorToast(context,
-                            title: 'No Internet Connection');
-                      }
-                    },
-                    child: child,
-                  ),
+          child: BlocBuilder<ThemeCubit, ThemeMode>(
+            builder: (context, themeMode) {
+              return MaterialApp.router(
+                routerConfig: _router,
+                debugShowCheckedModeBanner: false,
+                title: 'AppConfig.appName',
+                  themeMode: themeMode,
+                theme: AppTheme.light,
+                darkTheme: AppTheme.dark,
+                builder: (context, child) => kIsWeb
+                    ? child!
+                    : BlocListener<NetworkConnectionChecker,
+                        InternetConnectionStatus>(
+                        listenWhen: (previous, current) => previous != current,
+                        listener: (context, state) {
+                          if (state == InternetConnectionStatus.connected) {
+                            ToastManager.showSuccessToast(context,
+                                title: 'Back Online');
+                          } else {
+                            ToastManager.showErrorToast(context,
+                                title: 'No Internet Connection');
+                          }
+                        },
+                        child: child,
+                      ),
+              );
+            },
           ).animate().fadeIn(duration: 400.ms),
         ),
       ),

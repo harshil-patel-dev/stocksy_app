@@ -14,7 +14,6 @@ class SplashScreen extends StatelessWidget {
         }),
         builder: (context, snapshot) {
           return Scaffold(
-            backgroundColor: Colors.white,
             body: Center(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 20),
