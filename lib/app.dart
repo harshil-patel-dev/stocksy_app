@@ -17,9 +17,30 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final GoRouter _router =
       AppRouter(authenticationBloc: getIt.get<AuthenticationBloc>()).router;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      print("App is in the foreground");
+    } else if (state == AppLifecycleState.paused) {
+      print("App is in the background");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +76,7 @@ class _MyAppState extends State<MyApp> {
                 routerConfig: _router,
                 debugShowCheckedModeBanner: false,
                 title: 'AppConfig.appName',
-                  themeMode: themeMode,
+                themeMode: themeMode,
                 theme: AppTheme.light,
                 darkTheme: AppTheme.dark,
                 builder: (context, child) => kIsWeb
