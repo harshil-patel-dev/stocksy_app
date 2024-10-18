@@ -1,10 +1,7 @@
-import 'package:stock_trading_app/core/config/dependency_injector.dart';
 import 'package:stock_trading_app/core/constants/app_export.dart';
 import 'package:stock_trading_app/features/Dashboard/view/dashboard_view.dart';
-import 'package:stock_trading_app/features/Dashboard/view/detail.dart';
 import 'package:stock_trading_app/features/Dashboard/view/home_view.dart';
 import 'package:stock_trading_app/features/User/view/user_profile_view.dart';
-import 'package:stock_trading_app/features/authentication/repository/auth_repository.dart';
 import 'package:stock_trading_app/features/splash/splash_screen.dart';
 import '../../features/Login/view/login_view.dart';
 import '../../features/SignUp/view/signup_view.dart';
@@ -102,21 +99,6 @@ class AppRouter {
                     pageBuilder: (context, state) => const NoTransitionPage(
                       child: HomeView(),
                     ),
-                    routes: [
-                      GoRoute(
-                          parentNavigatorKey: _homeNavigatorKey,
-                          name: 'details',
-                          path: 'details',
-                          builder: (context, state) => const DetailsView(),
-                          routes: [
-                            GoRoute(
-                              parentNavigatorKey: _homeNavigatorKey,
-                              name: 'details2',
-                              path: 'details2',
-                              builder: (context, state) => const Details2View(),
-                            )
-                          ]),
-                    ],
                   ),
                 ],
               ),

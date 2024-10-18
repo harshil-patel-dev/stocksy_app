@@ -15,6 +15,15 @@ class DashboardScreen extends StatelessWidget {
 
   Scaffold _appDashboardView() {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Shuru.com",
+          style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.w900,
+              color: Colors.blueAccent),
+        ),
+      ),
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
@@ -45,25 +54,25 @@ class DashboardScreen extends StatelessWidget {
   PreferredSizeWidget _webNavbarView(BuildContext context) {
     return PreferredSize(
       preferredSize: Size(MediaQuery.of(context).size.width, 60),
-      child: Row(
-        children: [
-          Hero(
-            tag: AppConstants.AppLogoHeroTag,
-            child: Container(
-              width: 200,
-              height: 60,
-              margin: const EdgeInsets.all(12),
-              child: Image.asset(
-                'assets/icon.png',
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ),
-          const Spacer(),
-          _navButton(context, 'Dashboard', 0),
-          _navButton(context, 'Profile', 1),
-          const SizedBox(width: 20),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        child: Row(
+          children: [
+            const Hero(
+                tag: AppConstants.AppLogoHeroTag,
+                child: Text(
+                  "Shuru.com",
+                  style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.blueAccent),
+                )),
+            const Spacer(),
+            _navButton(context, 'Dashboard', 0),
+            _navButton(context, 'Profile', 1),
+            const SizedBox(width: 20),
+          ],
+        ),
       ),
     );
   }

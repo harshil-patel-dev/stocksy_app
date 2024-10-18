@@ -17,13 +17,14 @@ class SplashScreen extends StatelessWidget {
             body: Center(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 20),
-                width:
-                    MediaQuery.of(context).size.width * (kIsWeb ? 0.25 : 0.70),
-                child: Hero(
+                child: const Hero(
                   tag: AppConstants.AppLogoHeroTag,
-                  child: Image.asset(
-                    'assets/icon.png',
-                    fit: BoxFit.fitWidth,
+                  child: Text(
+                    "Shuru.com",
+                    style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.blueAccent),
                   ),
                 ),
               ),
