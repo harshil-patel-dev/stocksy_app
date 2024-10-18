@@ -1,4 +1,3 @@
-import 'package:hive/hive.dart';
 import 'package:stock_trading_app/core/utils/app_storage.dart';
 
 import '../model/user_model.dart';

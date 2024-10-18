@@ -77,12 +77,12 @@ class AppRouter {
         GoRoute(
           name: Routes.login.name,
           path: Routes.login.path,
-          builder: (context, state) => LoginScreen(),
+          builder: (context, state) => const LoginScreen(),
         ),
         GoRoute(
           name: Routes.signUp.name,
           path: Routes.signUp.path,
-          builder: (context, state) => SignUpScreen(),
+          builder: (context, state) => const SignUpScreen(),
         ),
         StatefulShellRoute.indexedStack(
             parentNavigatorKey: _rootNavigatorKey,

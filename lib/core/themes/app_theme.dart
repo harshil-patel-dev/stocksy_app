@@ -1,50 +1,9 @@
-// import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-
-// class AppTheme {
-//   AppTheme._();
-
-//   static ThemeData data(bool isDark) {
-//     return ThemeData(
-//       brightness: isDark ? Brightness.dark : Brightness.light,
-//       appBarTheme: AppBarTheme(
-//         backgroundColor: isDark ? AppColor.navy : AppColor.purple,
-//         centerTitle: true,
-//         elevation: 2.h,
-//         titleTextStyle: AppFont.bold.s16,
-//       ),
-//       floatingActionButtonTheme: FloatingActionButtonThemeData(
-//         backgroundColor: isDark ? AppColor.blue : AppColor.lightPurple,
-//         foregroundColor: isDark ? Colors.white : Colors.black,
-//         elevation: 2.h,
-//         extendedTextStyle: AppFont.normal.s14,
-//       ),
-//       elevatedButtonTheme: ElevatedButtonThemeData(
-//         style: ElevatedButton.styleFrom(
-//           backgroundColor: isDark ? AppColor.blue : AppColor.lightPurple,
-//           elevation: 2.h,
-//           textStyle: AppFont.normal.s14,
-//           shape: RoundedRectangleBorder(
-//             borderRadius: BorderRadius.circular(6.r),
-//           ),
-//         ),
-//       ),
-//       visualDensity: VisualDensity.adaptivePlatformDensity,
-//       fontFamily: GoogleFonts.poppins().fontFamily,
-//       textTheme: TextTheme(
-//         bodySmall: AppFont.normal.s12,
-//         bodyMedium: AppFont.normal.s14,
-//         bodyLarge: AppFont.normal.s16,
-//       ),
-//     );
-//   }
-// }
-
+import 'package:universal_html/html.dart' as html;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'dart:html' as html;
+
 import 'package:stock_trading_app/core/themes/app_colors.dart';
 import 'package:stock_trading_app/core/themes/app_fonts.dart';
 

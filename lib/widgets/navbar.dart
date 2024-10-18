@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:stock_trading_app/core/constants/app_export.dart';
 
 class CustomNavbar extends StatelessWidget implements PreferredSizeWidget {

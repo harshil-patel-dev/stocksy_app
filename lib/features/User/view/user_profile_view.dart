@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:stock_trading_app/core/constants/app_export.dart';
 import 'package:stock_trading_app/core/themes/app_theme.dart';
 import 'package:stock_trading_app/features/authentication/bloc/auth_bloc.dart';
-import 'package:stock_trading_app/features/authentication/repository/auth_repository.dart';
 
 class UserProfileView extends StatelessWidget {
   const UserProfileView({super.key});

@@ -56,11 +56,11 @@ class UserModel extends Equatable {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      accessToken: map['accessToken'] != null ? map["accessToken"] ?? '' as String : null,
-      refreshToken: map['refreshToken'] != null ? map["refreshToken"] ?? '' as String : null,
-      userId: map['userId'] != null ? map["userId"] ?? 0 as int : null,
-      userName: map['userName'] != null ? map["userName"] ?? '' as String : null,
-      userProfilePicture: map['userProfilePicture'] != null ? map["userProfilePicture"] ?? '' as String : null,
+      accessToken: map['accessToken'] != null ? map["accessToken"] ?? '' : null,
+      refreshToken: map['refreshToken'] != null ? map["refreshToken"] ?? '' : null,
+      userId: map['userId'] != null ? map["userId"] ?? 0 : null,
+      userName: map['userName'] != null ? map["userName"] ?? '' : null,
+      userProfilePicture: map['userProfilePicture'] != null ? map["userProfilePicture"] ?? '' : null,
     );
   }
 
